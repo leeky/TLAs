@@ -2,6 +2,8 @@ require "fileutils"
 require "csv"
 require "json"
 require "slugify"
+require "haml"
+require "tilt"
 
 BUILD_DIR = "dist"
 FileUtils.rm_rf(BUILD_DIR) if Dir.exist?(BUILD_DIR)
@@ -28,9 +30,7 @@ csv_files.each do |file_name|
   }) do |row|
     rows.push(row.to_hash)
     target_file = row[primary_key.to_sym].to_s.slugify
-    if target_file == ""
-      puts "Warning: No primary key on line #{$.}"
-    else
+    if target_file
       row_json = JSON.generate(row.to_hash)
       File.open("#{BUILD_DIR}/#{dataset_slug}/#{target_file}.json", "w") { |f| f.write(row_json) }
     end
@@ -39,4 +39,11 @@ csv_files.each do |file_name|
   # Write full dataset to file
   rows_json = JSON.generate(rows)
   File.open("#{BUILD_DIR}/#{dataset_slug}.json", "w") { |f| f.write(rows_json) }
+
+  # Render HTML
+  template = Tilt::HamlTemplate.new('pages.haml')
+  page = template.render(Object.new, rows: rows)
+
+  File.open("#{BUILD_DIR}/#{dataset_slug}/index.html", "w") { |f| f.write(page) }
 end
+

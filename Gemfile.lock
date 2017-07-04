@@ -1,13 +1,18 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    haml (4.0.7)
+      tilt
     slugify (1.0.7)
+    tilt (2.0.7)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  haml
   slugify
+  tilt
 
 BUNDLED WITH
    1.15.1

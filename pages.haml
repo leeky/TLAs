@@ -1,0 +1,24 @@
+!!! 5
+%html
+  %head
+    %title Three Letter Acronyms (TLAs)
+  %body
+    %h1 Three Letter Acronyms (TLAs)
+    %p
+      When working with public sector client, you'll invariably come across
+      a number of incomprehensible three letter acronyms. This web site helps
+      you understand them!
+
+    %table
+      %tr
+        %th Acronym
+        %th Meaning
+      - rows.each do |row|
+        - unless row.empty?
+          %tr
+            %td
+              %strong= row[:acronym]
+            %td
+              = row[:full]
+
+
