@@ -6,6 +6,7 @@ remote_repo=`git remote get-url origin`
 remote_branch="gh-pages"
 
 cd ./dist
+cp acronyms/index.html ./index.html
 git init
 git add .
 git commit -m "build - `date`"

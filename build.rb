@@ -36,6 +36,9 @@ csv_files.each do |file_name|
     end
   end
 
+  # Sort by acronym and remove empty rows
+  rows.sort_by!{|x| x[:acronym].to_s }.reject!(&:empty?)
+
   # Write full dataset to file
   rows_json = JSON.generate(rows)
   File.open("#{BUILD_DIR}/#{dataset_slug}.json", "w") { |f| f.write(rows_json) }

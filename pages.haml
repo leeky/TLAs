@@ -1,12 +1,18 @@
 !!! 5
 %html
   %head
-    %title Three Letter Acronyms (TLAs)
+    %title Acronyms
+    %style
+      body { background-color: #fff; color: #000; font-family: Verdana, Arial; }
+      table { border-collapse: collapse; padding: 1em 0; }
+      th { border-bottom: 1px solid #000; padding: 0.5em; text-align: left; }
+      td { border-top: 1px solid #000; padding: 0.5em; text-align: left; }
+
   %body
-    %h1 Three Letter Acronyms (TLAs)
+    %h1 Acronyms
     %p
-      When working with public sector client, you'll invariably come across
-      a number of incomprehensible three letter acronyms. This web site helps
+      When working with public sector clients, you'll invariably come across
+      a number of incomprehensible acronyms. This web site helps
       you understand them!
 
     %table
@@ -17,8 +23,12 @@
         - unless row.empty?
           %tr
             %td
-              %strong= row[:acronym]
+              %strong
+                - unless row[:website].to_s.empty?
+                  %a{ href: row[:website] }
+                    = row[:acronym]
+                - else
+                  = row[:acronym]
             %td
-              = row[:full]
-
+              = row[:meaning]
 
